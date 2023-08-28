@@ -36,9 +36,7 @@ export class GameOfLifeState {
 
   static createRandom(width: number, height: number): GameOfLifeState {
     const c = new GameOfLifeState(width, height);
-    const newState = c._state.map(() => +(Math.random() > 0.6));
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
+    const newState = c._state.map(() => +(Math.random() > 0.6)) as (1 | 0)[];
     c.setStateFromFlatArray(newState);
     return c;
   }
