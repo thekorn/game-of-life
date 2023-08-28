@@ -1,6 +1,7 @@
 import { serve } from 'bun';
+import { GameOfLifeState } from './game';
 
-const runningGames = new Set()
+const runningGames: Map<number, GameOfLifeState> = new Map()
 
 type WebSocketData = {
   gameId: number;
@@ -15,14 +16,22 @@ serve<WebSocketData>({
   websocket: {
     open: async (ws) => {
       console.log('Client connected, starting new game:', ws.data.gameId)
-      runningGames.add(ws.data.gameId);
-      let index = 0
+      const g = GameOfLifeState.createRandom(20, 20)
+      runningGames.set(ws.data.gameId, g);
 
       while (runningGames.has(ws.data.gameId)) {
-        index++
-        
-        ws.send(`<div id="game-state" hx-swap-oob="true">hallo ${index}</div>`);
-        await Bun.sleep(2000);
+        const oldState = runningGames.get(ws.data.gameId)!
+        const newState = oldState.next()
+        runningGames.set(ws.data.gameId, newState!)
+
+        if (GameOfLifeState.compare(oldState, newState!)) {
+          ws.send(`<div id="game-state" hx-swap-oob="true">GAME OVER</div>`);
+          break;
+        } else {
+          ws.send(`<div id="game-state" hx-swap-oob="true">${newState.renderHTML()}</div>`);
+          await Bun.sleep(500);
+
+        }
       }
     },
     message: (ws, message) => {

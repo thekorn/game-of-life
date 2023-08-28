@@ -34,6 +34,15 @@ export class GameOfLifeState {
     return a._state.every((v, i) => v === Boolean(b[i]));
   }
 
+  static createRandom(width: number, height: number): GameOfLifeState {
+    const c = new GameOfLifeState(width, height);
+    const newState = c._state.map(() => +(Math.random() > 0.6));
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    c.setStateFromFlatArray(newState);
+    return c;
+  }
+
   setStateFromFlatArray(newState: (1 | 0)[]) {
     assert(
       newState.length === this._width * this._height,
@@ -86,6 +95,19 @@ export class GameOfLifeState {
       output += '\n';
     }
     return output;
+  }
+
+  renderHTML(): string {
+    let output = '<div class="border">';
+    for (let y = 0; y < this._height; y++) {
+      output += '  <div class="flex">';
+      for (let x = 0; x < this._width; x++) {
+        const c = this.getStateAt(x, y) ? 'bg-black' : 'bg-white';
+        output += `    <div class="w-6 h-6 ${c}"></div>`;
+      }
+      output += '</div>\n';
+    }
+    return output + '</div>';
   }
 
   next(): GameOfLifeState {
