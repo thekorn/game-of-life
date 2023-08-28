@@ -39,3 +39,17 @@ test("next generation", () => {
     0, 1, 1,
   ])).toBe(true);
 });
+
+test("next generation", () => {
+  const cells = new GameOfLifeState(3, 3);
+  cells.setStateFromFlatArray([
+    0, 1, 0,
+    1, 1, 0,
+    0, 0, 0,
+  ])
+  expect(GameOfLifeState.compareWithArray(cells.next(), [
+    1, 1, 0,
+    1, 1, 0,
+    0, 0, 0,
+  ])).toBe(true);
+});
