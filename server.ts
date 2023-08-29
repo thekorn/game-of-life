@@ -25,11 +25,11 @@ serve<WebSocketData>({
         runningGames.set(ws.data.gameId, newState!);
 
         if (GameOfLifeState.compare(oldState, newState!)) {
-          ws.send(`<div id="game-state" hx-swap-oob="true">GAME OVER</div>`);
+          ws.send(`<div id="game-state" hx-swap-oob="true" class="m-2 max-w-min">GAME OVER</div>`);
           break;
         } else {
           ws.send(
-            `<div id="game-state" hx-swap-oob="true">${newState.renderHTML()}</div>`,
+            `<div id="game-state" hx-swap-oob="true" class="m-2 max-w-min">${newState.renderHTML()}</div>`,
           );
           await Bun.sleep(500);
         }

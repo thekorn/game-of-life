@@ -96,7 +96,7 @@ export class GameOfLifeState {
   }
 
   renderHTML(): string {
-    let output = '<div class="border">';
+    let output = '<div class="border-2 border-black">';
     for (let y = 0; y < this._height; y++) {
       output += '  <div class="flex">';
       for (let x = 0; x < this._width; x++) {
