@@ -13,18 +13,18 @@ class RunningGames {
   start(gameId: number) {
     const g = GameOfLifeState.createRandom(20, 20);
     this._games.set(gameId, g);
-    console.log('>>> game', gameId, 'started'); 
+    console.log('>>> game', gameId, 'started');
   }
 
   next(gameId: number): GameOfLifeState | null {
     const oldState = this._games.get(gameId)!;
     const newState = oldState.next();
     if (GameOfLifeState.compare(oldState, newState)) {
-      this.stop(gameId)
-      return null
+      this.stop(gameId);
+      return null;
     }
     this._games.set(gameId, newState!);
-    return newState
+    return newState;
   }
 
   stop(gameId: number) {
@@ -53,7 +53,9 @@ serve<WebSocketData>({
       while (runningGames.has(ws.data.gameId)) {
         const newState = runningGames.next(ws.data.gameId);
         if (newState === null) {
-          ws.send(`<div id="game-state" hx-swap-oob="true" class="m-2 max-w-min">GAME OVER</div>`);
+          ws.send(
+            `<div id="game-state" hx-swap-oob="true" class="m-2 max-w-min">GAME OVER</div>`,
+          );
           break;
         } else {
           ws.send(
