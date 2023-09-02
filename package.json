@@ -5,7 +5,8 @@
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint --ext .ts .",
-    "test": "bun test"
+    "test": "bun test",
+    "dev": "bun run --watch server.ts"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.4.1",
