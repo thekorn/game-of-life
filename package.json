@@ -5,18 +5,19 @@
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint --ext .ts .",
+    "tsc": "tsc",
     "test": "bun test",
     "dev": "bun run --watch server.ts"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.4.1",
-    "@typescript-eslint/parser": "^6.4.1",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "@typescript-eslint/parser": "^6.5.0",
     "bun-types": "latest",
     "eslint": "^8.48.0",
-    "prettier": "^3.0.2",
+    "prettier": "^3.0.3",
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.2.2"
   }
 }
